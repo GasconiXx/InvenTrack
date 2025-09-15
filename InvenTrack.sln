@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36429.23 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvenTrack", "InvenTrack\InvenTrack.csproj", "{7E9513A1-2863-4326-9A49-77814BE2F984}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7E9513A1-2863-4326-9A49-77814BE2F984}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E9513A1-2863-4326-9A49-77814BE2F984}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E9513A1-2863-4326-9A49-77814BE2F984}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{7E9513A1-2863-4326-9A49-77814BE2F984}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E9513A1-2863-4326-9A49-77814BE2F984}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E9513A1-2863-4326-9A49-77814BE2F984}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5BD2352F-7D76-4F9E-9BB1-C7FF3B26C081}
+	EndGlobalSection
+EndGlobal
