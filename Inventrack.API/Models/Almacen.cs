@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Inventrack.API.Models;
 
-public partial class Almacene
+public partial class Almacen
 {
     public int AlmacenId { get; set; }
 

@@ -15,7 +15,7 @@ public partial class InvenTrackContext : DbContext
     {
     }
 
-    public virtual DbSet<Almacene> Almacenes { get; set; }
+    public virtual DbSet<Almacen> Almacenes { get; set; }
 
     public virtual DbSet<Envio> Envios { get; set; }
 
@@ -39,7 +39,7 @@ public partial class InvenTrackContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Almacene>(entity =>
+        modelBuilder.Entity<Almacen>(entity =>
         {
             entity.HasKey(e => e.AlmacenId).HasName("PK__Almacene__022A087680FECE16");
 

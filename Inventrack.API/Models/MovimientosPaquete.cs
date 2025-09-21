@@ -19,7 +19,7 @@ public partial class MovimientosPaquete
 
     public string? Observaciones { get; set; }
 
-    public virtual Almacene Almacen { get; set; } = null!;
+    public virtual Almacen Almacen { get; set; } = null!;
 
     public virtual Paquete Paquete { get; set; } = null!;
 
