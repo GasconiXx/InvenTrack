@@ -5,13 +5,11 @@ using System.Collections.Generic;
 
 namespace Inventrack.API.Models;
 
-public partial class Ruta
+public partial class Role
 {
-    public int RutaId { get; set; }
+    public int RolId { get; set; }
 
     public string Nombre { get; set; }
 
-    public string Descripcion { get; set; }
-
-    public virtual ICollection<EnvioRuta> EnvioRuta { get; set; } = new List<EnvioRuta>();
+    public virtual ICollection<Usuario> Usuarios { get; set; } = new List<Usuario>();
 }
