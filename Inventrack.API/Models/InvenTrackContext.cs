@@ -6,16 +6,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Inventrack.API.Models;
 
-public partial class DBContext : DbContext
+public partial class InvenTrackContext : DbContext
 {
-    public DBContext(DbContextOptions<DBContext> options)
+    public InvenTrackContext(DbContextOptions<InvenTrackContext> options)
         : base(options)
     {
     }
 
-    public virtual DbSet<Almacene> Almacenes { get; set; }
+    public virtual DbSet<Almacen> Almacenes { get; set; }
 
-    public virtual DbSet<Direccione> Direcciones { get; set; }
+    public virtual DbSet<Direccion> Direcciones { get; set; }
 
     public virtual DbSet<Envio> Envios { get; set; }
 
@@ -31,7 +31,7 @@ public partial class DBContext : DbContext
 
     public virtual DbSet<Paquete> Paquetes { get; set; }
 
-    public virtual DbSet<Role> Roles { get; set; }
+    public virtual DbSet<Rol> Roles { get; set; }
 
     public virtual DbSet<Ruta> Rutas { get; set; }
 
@@ -39,7 +39,7 @@ public partial class DBContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Almacene>(entity =>
+        modelBuilder.Entity<Almacen>(entity =>
         {
             entity.HasKey(e => e.AlmacenId).HasName("PK__Almacene__022A087610C4052E");
 
@@ -54,7 +54,7 @@ public partial class DBContext : DbContext
                 .HasConstraintName("FK__Almacenes__Direc__7A672E12");
         });
 
-        modelBuilder.Entity<Direccione>(entity =>
+        modelBuilder.Entity<Direccion>(entity =>
         {
             entity.HasKey(e => e.DireccionId).HasName("PK__Direccio__68906D641E1D5C73");
 
@@ -245,7 +245,7 @@ public partial class DBContext : DbContext
                 .HasConstraintName("FK__Paquetes__Estado__05D8E0BE");
         });
 
-        modelBuilder.Entity<Role>(entity =>
+        modelBuilder.Entity<Rol>(entity =>
         {
             entity.HasKey(e => e.RolId).HasName("PK__Roles__F92302F1CBA1DC2E");
 

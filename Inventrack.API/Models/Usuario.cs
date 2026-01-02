@@ -25,7 +25,7 @@ public partial class Usuario
 
     public int? AlmacenId { get; set; }
 
-    public virtual Almacene Almacen { get; set; }
+    public virtual Almacen Almacen { get; set; }
 
     public virtual ICollection<Envio> Envios { get; set; } = new List<Envio>();
 
@@ -37,5 +37,5 @@ public partial class Usuario
 
     public virtual ICollection<Paquete> Paquetes { get; set; } = new List<Paquete>();
 
-    public virtual Role Rol { get; set; }
+    public virtual Rol Rol { get; set; }
 }

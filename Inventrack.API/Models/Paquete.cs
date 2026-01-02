@@ -29,13 +29,13 @@ public partial class Paquete
 
     public int? AlmacenActualId { get; set; }
 
-    public virtual Almacene AlmacenActual { get; set; }
+    public virtual Almacen AlmacenActual { get; set; }
 
     public virtual Usuario Destinatario { get; set; }
 
-    public virtual Direccione DireccionDestino { get; set; }
+    public virtual Direccion DireccionDestino { get; set; }
 
-    public virtual Direccione DireccionOrigen { get; set; }
+    public virtual Direccion DireccionOrigen { get; set; }
 
     public virtual ICollection<Envio> Envios { get; set; } = new List<Envio>();
 

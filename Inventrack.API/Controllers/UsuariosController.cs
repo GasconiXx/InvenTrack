@@ -89,4 +89,34 @@ public class UsuariosController : ControllerBase
     {
         return _context.Usuarios.Any(e => e.UsuarioId == id);
     }
+
+    public class LoginRequest
+    {
+        public string Email { get; set; }
+        public string Password { get; set; }
+    }
+
+    [HttpPost("login")]
+    public async Task<IActionResult> Login([FromBody] LoginRequest request)
+    {
+        if (string.IsNullOrWhiteSpace(request.Email) ||
+            string.IsNullOrWhiteSpace(request.Password))
+        {
+            return BadRequest("Email y contraseña obligatorios");
+        }
+
+        var usuario = await _context.Usuarios
+            .FirstOrDefaultAsync(u =>
+                u.Email == request.Email &&
+                u.ContrasenaHash == request.Password);
+
+        if (usuario == null)
+            return Unauthorized("Credenciales incorrectas");
+
+        return Ok(new
+        {
+            usuario.UsuarioId,
+            usuario.RolId
+        });
+    }
 }

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Inventrack.API.Models;
 
-public partial class Direccione
+public partial class Direccion
 {
     public int DireccionId { get; set; }
 
@@ -19,7 +19,7 @@ public partial class Direccione
 
     public string Pais { get; set; }
 
-    public virtual ICollection<Almacene> Almacenes { get; set; } = new List<Almacene>();
+    public virtual ICollection<Almacen> Almacenes { get; set; } = new List<Almacen>();
 
     public virtual ICollection<Paquete> PaqueteDireccionDestinos { get; set; } = new List<Paquete>();
 

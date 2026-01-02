@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Inventrack.API.Models;
 
-public partial class Role
+public partial class Rol
 {
     public int RolId { get; set; }
 
