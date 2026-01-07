@@ -8,9 +8,9 @@ namespace Inventrack.API.Controllers;
 [Route("api/[controller]")]
 public class MovimientosPaquetesController : ControllerBase
 {
-    private readonly InvenTrackContext _context;
+    private readonly InventrackContext _context;
 
-    public MovimientosPaquetesController(InvenTrackContext context)
+    public MovimientosPaquetesController(InventrackContext context)
     {
         _context = context;
     }

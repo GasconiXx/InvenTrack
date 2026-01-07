@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Inventrack.API.Models;
 
-public partial class InvenTrackContext : DbContext
+public partial class InventrackContext : DbContext
 {
-    public InvenTrackContext(DbContextOptions<InvenTrackContext> options)
+    public InventrackContext(DbContextOptions<InventrackContext> options)
         : base(options)
     {
     }

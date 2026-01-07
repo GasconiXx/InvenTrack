@@ -8,9 +8,9 @@ namespace Inventrack.API.Controllers;
 [Route("api/[controller]")]
 public class UsuariosController : ControllerBase
 {
-    private readonly InvenTrackContext _context;
+    private readonly InventrackContext _context;
 
-    public UsuariosController(InvenTrackContext context)
+    public UsuariosController(InventrackContext context)
     {
         _context = context;
     }
@@ -94,29 +94,5 @@ public class UsuariosController : ControllerBase
     {
         public string Email { get; set; }
         public string Password { get; set; }
-    }
-
-    [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginRequest request)
-    {
-        if (string.IsNullOrWhiteSpace(request.Email) ||
-            string.IsNullOrWhiteSpace(request.Password))
-        {
-            return BadRequest("Email y contraseña obligatorios");
-        }
-
-        var usuario = await _context.Usuarios
-            .FirstOrDefaultAsync(u =>
-                u.Email == request.Email &&
-                u.ContrasenaHash == request.Password);
-
-        if (usuario == null)
-            return Unauthorized("Credenciales incorrectas");
-
-        return Ok(new
-        {
-            usuario.UsuarioId,
-            usuario.RolId
-        });
     }
 }

@@ -8,9 +8,9 @@ namespace Inventrack.API.Controllers;
 [Route("api/[controller]")]
 public class PagosController : ControllerBase
 {
-    private readonly InvenTrackContext _context;
+    private readonly InventrackContext _context;
 
-    public PagosController(InvenTrackContext context)
+    public PagosController(InventrackContext context)
     {
         _context = context;
     }

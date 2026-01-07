@@ -8,9 +8,9 @@ namespace Inventrack.API.Controllers;
 [Route("api/[controller]")]
 public class IncidenciasController : ControllerBase
 {
-    private readonly InvenTrackContext _context;
+    private readonly InventrackContext _context;
 
-    public IncidenciasController(InvenTrackContext context)
+    public IncidenciasController(InventrackContext context)
     {
         _context = context;
     }
