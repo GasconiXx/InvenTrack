@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Inventrack.App.Views.UserEditPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Usuario">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="12">
+
+            <Label x:Name="ModeTitle" FontSize="18" FontAttributes="Bold" />
+
+            <Entry x:Name="NombreEntry" Placeholder="Nombre" />
+            <Entry x:Name="EmailEntry" Placeholder="Email" Keyboard="Email" />
+            <Entry x:Name="TelefonoEntry" Placeholder="Teléfono" Keyboard="Telephone" />
+
+            <Entry x:Name="RolIdEntry"
+                   Placeholder="RolId (1=Cliente,3=Repartidor,2=Almacén,4=Admin)"
+                   Keyboard="Numeric" />
+
+            <Entry x:Name="AlmacenIdEntry"
+                   Placeholder="AlmacenId (opcional)"
+                   Keyboard="Numeric" />
+
+            <HorizontalStackLayout Spacing="12">
+                <Label Text="Activo" VerticalOptions="Center" />
+                <Switch x:Name="ActivoSwitch" IsToggled="True" />
+            </HorizontalStackLayout>
+
+            <Entry x:Name="PasswordEntry"
+                   Placeholder="Contraseña (solo crear)"
+                   IsPassword="True" />
+
+            <Label x:Name="ErrorLabel" TextColor="Red" IsVisible="False"/>
+
+            <Button x:Name="SaveButton" Text="Guardar" Clicked="OnSaveClicked" />
+            <ActivityIndicator x:Name="Busy" IsVisible="False" IsRunning="False" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
