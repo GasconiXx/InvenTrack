@@ -35,10 +35,35 @@ public class UsuariosController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Usuario>> PostUsuario(Usuario usuario)
+    public async Task<ActionResult<Usuario>> PostUsuario([FromBody] CreateUserRequest request, CancellationToken ct)
     {
+        if (string.IsNullOrWhiteSpace(request.Nombre) ||
+            string.IsNullOrWhiteSpace(request.Email) ||
+            string.IsNullOrWhiteSpace(request.ContrasenaHash))
+            return BadRequest("Nombre, Email y Password son obligatorios.");
+
+        var email = request.Email.Trim().ToLowerInvariant();
+
+        var exists = await _context.Usuarios.AnyAsync(u => u.Email.ToLower() == email, ct);
+        if (exists) return BadRequest("Ya existe un usuario con ese email.");
+
+        var usuario = new Usuario
+        {
+            Nombre = request.Nombre.Trim(),
+            Email = email,
+            Telefono = request.Telefono?.Trim() ?? "",
+            RolId = request.RolId,
+            Activo = request.Activo,
+            AlmacenId = request.AlmacenId,
+            FechaRegistro = DateTime.UtcNow,
+
+            ContrasenaHash = BCrypt.Net.BCrypt.HashPassword(request.ContrasenaHash)
+        };
+
         _context.Usuarios.Add(usuario);
-        await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync(ct);
+
+        usuario.ContrasenaHash = "";
 
         return CreatedAtAction(nameof(GetUsuario), new { id = usuario.UsuarioId }, usuario);
     }
@@ -94,5 +119,26 @@ public class UsuariosController : ControllerBase
     {
         public string Email { get; set; }
         public string Password { get; set; }
+    }
+
+    public sealed class CreateUserRequest
+    {
+        public string Nombre { get; set; } = "";
+        public string Email { get; set; } = "";
+        public string Telefono { get; set; } = "";
+        public int RolId { get; set; }
+        public bool Activo { get; set; } = true;
+        public int? AlmacenId { get; set; }
+        public string ContrasenaHash { get; set; } = "";
+    }
+    public sealed class UpdateUserRequest
+    {
+        public string Nombre { get; set; } = "";
+        public string Email { get; set; } = "";
+        public string Telefono { get; set; } = "";
+        public int RolId { get; set; }
+        public bool Activo { get; set; } = true;
+        public int? AlmacenId { get; set; }
+        public string? ContrasenaHash { get; set; }
     }
 }

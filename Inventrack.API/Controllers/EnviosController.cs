@@ -1,6 +1,8 @@
+using Inventrack.API.Contracts.Envios;
+using Inventrack.API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Inventrack.API.Models;
 
 namespace Inventrack.API.Controllers;
 
@@ -88,5 +90,32 @@ public class EnviosController : ControllerBase
     private bool EnvioExists(int id)
     {
         return _context.Envios.Any(e => e.EnvioId == id);
+    }
+
+    [HttpGet("mios")]
+    public async Task<ActionResult<List<EnvioListItemDto>>> GetMisEnvios([FromQuery] int repartidorId, CancellationToken ct)
+    {
+        if (repartidorId <= 0) return BadRequest("repartidorId inválido.");
+
+        
+        var data = await _context.Envios
+            .AsNoTracking()
+            .Where(e => e.RepartidorId == repartidorId)
+            .Select(e => new EnvioListItemDto
+            {
+                EnvioId = e.EnvioId,
+                PaqueteId = e.PaqueteId,
+                CodigoSeguimiento = e.Paquete.CodigoSeguimiento,
+                Estado = e.Estado,
+                IntentosEntrega = e.IntentosEntrega,
+
+                DireccionDestino =
+                    e.Paquete.DireccionDestino.Calle + ", " +
+                    e.Paquete.DireccionDestino.Ciudad + " (" +
+                    e.Paquete.DireccionDestino.CodigoPostal + ")"
+            })
+            .ToListAsync(ct);
+
+        return Ok(data);
     }
 }

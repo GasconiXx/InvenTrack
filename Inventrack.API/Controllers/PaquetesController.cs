@@ -1,6 +1,9 @@
+using Inventrack.API.Contracts.Packages;
+using Inventrack.API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Inventrack.API.Models;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Inventrack.API.Controllers;
 
@@ -88,5 +91,46 @@ public class PaquetesController : ControllerBase
     private bool PaqueteExists(int id)
     {
         return _context.Paquetes.Any(e => e.PaqueteId == id);
+    }
+
+    [HttpGet("all")]
+    public async Task<ActionResult<List<PackageListItemDto>>> GetAll(CancellationToken ct)
+    {
+
+        var data = await _context.Paquetes
+            .AsNoTracking()
+            .Select(p => new PackageListItemDto
+            {
+                PaqueteId = p.PaqueteId,
+                Codigo = p.CodigoSeguimiento,
+                Estado = p.Estado.Nombre,
+                Destinatario = p.Destinatario.Nombre,
+                Almacen = p.AlmacenActual.Nombre
+            })
+            .ToListAsync(ct);
+
+        return Ok(data);
+    }
+
+    [HttpGet("mios")]
+    public async Task<ActionResult<List<PackageListItemDto>>> GetMisPaquetes([FromQuery] int userId, CancellationToken ct)
+    {
+        if (userId <= 0)
+            return BadRequest("userId inválido.");
+
+        var data = await _context.Paquetes
+            .AsNoTracking()
+            .Where(p => p.DestinatarioId == userId)
+            .Select(p => new PackageListItemDto
+            {
+                PaqueteId = p.PaqueteId,
+                Codigo = p.CodigoSeguimiento,
+                Estado = p.Estado.Nombre,
+                Destinatario = p.Destinatario.Nombre,
+                Almacen = p.AlmacenActual.Nombre
+            })
+            .ToListAsync(ct);
+
+        return Ok(data);
     }
 }
