@@ -12,11 +12,13 @@ public sealed class AuthController : ControllerBase
 {
     private readonly InventrackContext _db;
     private readonly IJwtTokenService _jwt;
+    private readonly IWebHostEnvironment _env;
 
-    public AuthController(InventrackContext db, IJwtTokenService jwt)
+    public AuthController(InventrackContext db, IJwtTokenService jwt, IWebHostEnvironment env)
     {
         _db = db;
         _jwt = jwt;
+        _env = env;
     }
 
     [HttpPost("login")]
@@ -37,7 +39,6 @@ public sealed class AuthController : ControllerBase
         if (user.Activo.HasValue && user.Activo.Value == false)
             return Unauthorized("Usuario desactivado.");
 
-        // Comparación de hash (BCrypt)
         var ok = BCrypt.Net.BCrypt.Verify(request.Password, user.ContrasenaHash);
         if (!ok)
             return Unauthorized("Credenciales incorrectas.");
@@ -59,6 +60,23 @@ public sealed class AuthController : ControllerBase
         };
 
         return Ok(response);
+    }
+
+    [HttpPost("hash")]
+    public ActionResult<string> HashPassword([FromBody] HashPasswordRequest request)
+    {
+        if (!_env.IsDevelopment())
+            return NotFound();
+
+        if (string.IsNullOrWhiteSpace(request.Password))
+            return BadRequest("Password obligatoria.");
+
+        const string expectedKey = "DEV_ONLY_KEY_123";
+        if (!string.Equals(request.Key, expectedKey, StringComparison.Ordinal))
+            return Unauthorized("Clave incorrecta.");
+
+        var hash = BCrypt.Net.BCrypt.HashPassword(request.Password);
+        return Ok(hash);
     }
 }
 
