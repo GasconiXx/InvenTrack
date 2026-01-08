@@ -1,4 +1,4 @@
-﻿namespace InvenTrack
+﻿namespace Inventrack.App
 {
     public partial class App : Application
     {

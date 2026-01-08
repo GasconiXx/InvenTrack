@@ -1,10 +1,12 @@
-﻿using InvenTrack.Services;
+﻿using Inventrack.App.Services;
+using Inventrack.App.Services.Interfaces;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using System.Linq;
 
-namespace InvenTrack.ViewModels;
+namespace Inventrack.App.ViewModels;
 public sealed class MainViewModel : INotifyPropertyChanged
 {
     private readonly ISessionService _session;

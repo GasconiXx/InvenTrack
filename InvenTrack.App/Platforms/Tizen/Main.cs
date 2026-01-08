@@ -2,7 +2,7 @@ using Microsoft.Maui;
 using Microsoft.Maui.Hosting;
 using System;
 
-namespace InvenTrack
+namespace Inventrack.App
 {
     internal class Program : MauiApplication
     {

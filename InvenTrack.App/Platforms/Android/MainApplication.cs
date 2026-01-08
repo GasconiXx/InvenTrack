@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace InvenTrack
+namespace Inventrack.App
 {
     [Application]
     public class MainApplication : MauiApplication

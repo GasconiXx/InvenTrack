@@ -1,19 +1,13 @@
-﻿using System;
+﻿using Inventrack.App.Models.Dtos.Auth;
+using Inventrack.App.Services.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InvenTrack.Services
+namespace Inventrack.App.Services
 {
-    public interface ISessionService
-    {
-        string? Token { get; }
-        UsuarioDto? CurrentUser { get; }
-
-        Task SetSessionAsync(string token, UsuarioDto user);
-        Task ClearAsync();
-    }
 
     public sealed class SessionService : ISessionService
     {
@@ -27,7 +21,7 @@ namespace InvenTrack.Services
 
         public string? Token => Preferences.Get(TokenKey, null);
 
-        public UsuarioDto? CurrentUser
+        public UserDto? CurrentUser
         {
             get
             {
@@ -35,19 +29,19 @@ namespace InvenTrack.Services
                 var userId = Preferences.Get(UserIdKey, 0);
                 if (string.IsNullOrWhiteSpace(token) || userId <= 0) return null;
 
-                return new UsuarioDto
+                return new UserDto
                 {
                     UsuarioId = userId,
                     Nombre = Preferences.Get(UserNameKey, ""),
                     Email = Preferences.Get(UserEmailKey, ""),
                     RolId = Preferences.Get(UserRoleKey, 0),
-                    AlmacenId = Preferences.ContainsKey(UserAlmacenKey) ? Preferences.Get(UserAlmacenKey, 0) : null,
-                    Activo = Preferences.ContainsKey(UserActivoKey) ? Preferences.Get(UserActivoKey, true) : null
+                    AlmacenId = Preferences.ContainsKey(UserAlmacenKey) ? Preferences.Get(UserAlmacenKey, 0) : (int?)null,
+                    Activo = Preferences.ContainsKey(UserActivoKey) ? Preferences.Get(UserActivoKey, true) : (bool?)null
                 };
             }
         }
 
-        public Task SetSessionAsync(string token, UsuarioDto user)
+        public Task SetSessionAsync(string token, UserDto user)
         {
             Preferences.Set(TokenKey, token);
             Preferences.Set(UserIdKey, user.UsuarioId);

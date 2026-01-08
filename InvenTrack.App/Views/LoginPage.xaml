@@ -1,37 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="InvenTrack.Views.LoginPage"
+    x:Class="Inventrack.App.Views.LoginPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="Iniciar sesión">
+    Title="Login">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="24" Spacing="14">
+    <VerticalStackLayout Padding="24" Spacing="12">
+        <Label Text="InvenTrack" FontSize="32" FontAttributes="Bold" />
 
-            <Label Text="InvenTrack" FontSize="32" FontAttributes="Bold" />
-            <Label Text="Accede con tus credenciales para cargar tu área según tu rol."
-                   Opacity="0.7" />
+        <Entry Placeholder="Email" Keyboard="Email" Text="{Binding Email}" />
+        <Entry Placeholder="Contraseña" IsPassword="True" Text="{Binding Password}" />
 
-            <Entry Placeholder="Email"
-                   Keyboard="Email"
-                   Text="{Binding Email}"
-                   ClearButtonVisibility="WhileEditing" />
+        <Label Text="{Binding Error}" TextColor="Red" />
 
-            <Entry Placeholder="Contraseña"
-                   IsPassword="True"
-                   Text="{Binding Password}" />
-
-            <Label Text="{Binding ErrorMessage}"
-                   TextColor="Red"
-                   IsVisible="{Binding ErrorMessage, Converter={StaticResource StringNotEmptyConverter}}" />
-
-            <Button Text="Iniciar sesión"
-                    Command="{Binding LoginCommand}"
-                    IsEnabled="{Binding IsBusy, Converter={StaticResource InverseBoolConverter}}" />
-
-            <ActivityIndicator IsRunning="{Binding IsBusy}"
-                               IsVisible="{Binding IsBusy}" />
-
-        </VerticalStackLayout>
-    </ScrollView>
+        <Button Text="Entrar" Command="{Binding LoginCommand}" />
+        <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+    </VerticalStackLayout>
 </ContentPage>

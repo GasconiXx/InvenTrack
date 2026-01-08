@@ -1,40 +1,44 @@
-﻿using InvenTrack.Views;
-using Microsoft.Extensions.Logging;
-using System.Net.Http.Headers;
-using Microsoft.Extensions.DependencyInjection;
-using InvenTrack.Services;
-using InvenTrack.ViewModels;
+﻿using Inventrack.App;
+using Inventrack.App.Services;
+using Inventrack.App.Services.Http;
+using Inventrack.App.Services.Interfaces;
+using Inventrack.App.ViewModels;
+using Inventrack.App.Views;
 
-namespace InvenTrack
+namespace Inventrack.App;
+
+public static class MauiProgram
 {
-    public static class MauiProgram
+    public static MauiApp CreateMauiApp()
     {
-        public static MauiApp CreateMauiApp()
+        var builder = MauiApp.CreateBuilder();
+        builder.UseMauiApp<App>();
+
+        builder.Services.AddSingleton<ISessionService, SessionService>();
+
+        builder.Services.AddTransient<AuthHeaderHandler>();
+
+        builder.Services.AddHttpClient("ApiClient", client =>
         {
-            var builder = MauiApp.CreateBuilder();
-            builder
-                .UseMauiApp<App>()
-                .ConfigureFonts(fonts =>
-                {
-                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                });
-            builder.Services.AddSingleton<ISessionService, SessionService>();
+            client.BaseAddress = new Uri("https://localhost:7261/"); 
+        })
+        .AddHttpMessageHandler<AuthHeaderHandler>();
 
-            builder.Services.AddHttpClient<IAuthService, AuthService>(client =>
-            {
-                client.BaseAddress = new Uri("https://localhost:7261/");
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            });
-            builder.Services.AddTransient<LoginViewModel>();
-            builder.Services.AddTransient<LoginPage>();
-            builder.Services.AddTransient<MainViewModel>();
-            builder.Services.AddTransient<MainPage>();
-#if DEBUG
-            builder.Logging.AddDebug();
-#endif
+        // Services
+        builder.Services.AddTransient<IAuthService, AuthService>();
+        builder.Services.AddTransient<IPackagesService, PackagesService>();
 
-            return builder.Build();
-        }
+        // VMs
+        builder.Services.AddTransient<LoginViewModel>();
+        builder.Services.AddTransient<MainViewModel>();
+
+        // Pages
+        builder.Services.AddTransient<LoginPage>();
+        builder.Services.AddTransient<MainPage>();
+
+        // Shell
+        builder.Services.AddSingleton<AppShell>();
+
+        return builder.Build();
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Foundation;
 
-namespace InvenTrack
+namespace Inventrack.App
 {
     [Register("AppDelegate")]
     public class AppDelegate : MauiUIApplicationDelegate

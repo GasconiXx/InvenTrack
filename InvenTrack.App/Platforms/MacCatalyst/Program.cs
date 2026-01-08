@@ -1,7 +1,7 @@
 ﻿using ObjCRuntime;
 using UIKit;
 
-namespace InvenTrack
+namespace Inventrack.App
 {
     public class Program
     {

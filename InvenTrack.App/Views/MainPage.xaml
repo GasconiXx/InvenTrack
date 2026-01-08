@@ -1,23 +1,21 @@
-﻿<ContentPage
-    x:Class="InvenTrack.Views.MainPage"
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Inventrack.App.Views.MainPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <Grid ColumnDefinitions="260,*" RowDefinitions="Auto,*">
 
-        <!-- Header -->
         <Grid Grid.ColumnSpan="2" Padding="16" ColumnDefinitions="*,Auto">
             <Label Text="InvenTrack" FontSize="22" FontAttributes="Bold" />
             <Button Grid.Column="1" Text="Cerrar sesión" Command="{Binding LogoutCommand}" />
         </Grid>
 
-        <!-- Menú lateral -->
         <CollectionView
             Grid.Row="1"
             ItemsSource="{Binding MenuItems}"
             SelectedItem="{Binding SelectedMenuItem}"
             SelectionMode="Single">
-
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Grid Padding="12">
@@ -27,16 +25,10 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <!-- Contenido / listado -->
         <Grid Grid.Row="1" Grid.Column="1" Padding="16" RowDefinitions="Auto,*" RowSpacing="12">
-
             <Label Text="{Binding CurrentSectionTitle}" FontSize="18" FontAttributes="Bold" />
 
-            <CollectionView
-                Grid.Row="1"
-                ItemsSource="{Binding Items}"
-                SelectionMode="Single"
-                SelectedItem="{Binding SelectedItem}">
+            <CollectionView Grid.Row="1" ItemsSource="{Binding Items}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Frame Padding="12" Margin="0,0,0,10">
@@ -48,8 +40,7 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-
         </Grid>
+
     </Grid>
 </ContentPage>
-

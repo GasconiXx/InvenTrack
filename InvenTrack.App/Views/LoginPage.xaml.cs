@@ -1,8 +1,8 @@
-using InvenTrack.ViewModels;
+using Inventrack.App.ViewModels;
 
-namespace InvenTrack.Views;
+namespace Inventrack.App.Views;
 
-public partial class LoginPage : ContentPage
+public partial class LoginPage : ContentPage //TODO
 {
     public LoginPage(LoginViewModel vm)
     {
