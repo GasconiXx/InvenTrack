@@ -104,7 +104,8 @@ public class PaquetesController : ControllerBase
                 PaqueteId = p.PaqueteId,
                 Codigo = p.CodigoSeguimiento,
                 Estado = p.Estado.Nombre,
-                Destinatario = p.Destinatario.Nombre,
+                Remitente = $"{p.DireccionOrigen.Calle}, {p.DireccionOrigen.Ciudad}, {p.DireccionOrigen.Provincia}, {p.DireccionOrigen.CodigoPostal}",
+                Destinatario = $"{p.DireccionDestino.Calle}, {p.DireccionDestino.Ciudad}, {p.DireccionDestino.Provincia}, {p.DireccionDestino.CodigoPostal}",
                 Almacen = p.AlmacenActual.Nombre
             })
             .ToListAsync(ct);
@@ -126,7 +127,7 @@ public class PaquetesController : ControllerBase
                 PaqueteId = p.PaqueteId,
                 Codigo = p.CodigoSeguimiento,
                 Estado = p.Estado.Nombre,
-                Destinatario = p.Destinatario.Nombre,
+                Remitente = $"{p.DireccionOrigen.Calle}, {p.DireccionOrigen.Ciudad},  {p.DireccionOrigen.Provincia}, {p.DireccionOrigen.CodigoPostal}",
                 Almacen = p.AlmacenActual.Nombre
             })
             .ToListAsync(ct);
