@@ -10,7 +10,8 @@ namespace Inventrack.App.ViewModels;
 public sealed class MainViewModel : INotifyPropertyChanged
 {
     private readonly ISessionService _session;
-    private readonly IPackagesService _packagesService; // el que llame a tu API
+    private readonly IPackagesService _packagesService;
+    private readonly IUserService _userService;
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -18,11 +19,17 @@ public sealed class MainViewModel : INotifyPropertyChanged
     public ObservableCollection<ListItemVm> Items { get; } = new();
 
     private MenuItemVm? _selectedMenuItem;
+
+    private string? _lastSectionKey;
+
     public MenuItemVm? SelectedMenuItem
     {
         get => _selectedMenuItem;
         set
         {
+            if (_selectedMenuItem?.Key == value?.Key)
+                return;
+
             _selectedMenuItem = value;
             OnPropertyChanged();
             _ = LoadSectionAsync(value);
@@ -38,13 +45,18 @@ public sealed class MainViewModel : INotifyPropertyChanged
 
     public ICommand LogoutCommand { get; }
 
-    public MainViewModel(ISessionService session, IPackagesService packagesService)
+    public MainViewModel(ISessionService session, IPackagesService packagesService, IUserService userService)
     {
         _session = session;
         _packagesService = packagesService;
+        _userService = userService;
 
         LogoutCommand = new Command(async () =>
         {
+            MenuItems.Clear();
+            Items.Clear();
+            SelectedMenuItem = null;
+            CurrentSectionTitle = "";
             await _session.ClearAsync();
             await Shell.Current.GoToAsync("//login");
         });
@@ -59,16 +71,15 @@ public sealed class MainViewModel : INotifyPropertyChanged
         var user = _session.CurrentUser;
         var rolId = user?.RolId ?? 0;
 
-        // Ejemplo: ajusta IDs a tus roles reales
         if (rolId == 1) // Cliente
         {
             MenuItems.Add(new() { Key = "my_packages", Title = "Mis paquetes" });
         }
-        else if (rolId == 2) // Repartidor
+        else if (rolId == 3) // Repartidor
         {
             MenuItems.Add(new() { Key = "assigned", Title = "Asignados" });
         }
-        else if (rolId == 3) // Almacén
+        else if (rolId == 2) // Almacén
         {
             MenuItems.Add(new() { Key = "warehouse", Title = "Paquetes en almacén" });
         }
@@ -78,7 +89,6 @@ public sealed class MainViewModel : INotifyPropertyChanged
             MenuItems.Add(new() { Key = "users", Title = "Usuarios" });
         }
 
-        // Selecciona primera sección por defecto
         SelectedMenuItem = MenuItems.FirstOrDefault();
     }
 
@@ -89,7 +99,6 @@ public sealed class MainViewModel : INotifyPropertyChanged
         CurrentSectionTitle = section.Title;
         Items.Clear();
 
-        // Aquí conectas con tu API según sección
         switch (section.Key)
         {
             case "my_packages":
@@ -101,9 +110,14 @@ public sealed class MainViewModel : INotifyPropertyChanged
                 }
             case "assigned":
                 {
-                    var res = await _packagesService.GetAssignedAsync();
-                    foreach (var p in res)
-                        Items.Add(new() { MainText = p.Codigo, SubText = p.Estado });
+                    var res = await _packagesService.GetMyShipmentsAsync();
+                    foreach (var s in res)
+                        Items.Add(new()
+                        {
+                            MainText = s.DireccionDestino,
+                            SubText = $"{s.CodigoSeguimiento} · {s.Estado} · Intentos: {s.IntentosEntrega}",
+                            Raw = s
+                        });
                     break;
                 }
             case "warehouse":
@@ -122,7 +136,9 @@ public sealed class MainViewModel : INotifyPropertyChanged
                 }
             case "users":
                 {
-                    // opcional: listado simple de usuarios para admin
+                    var res = await _userService.GetAllUsersAsync();
+                    foreach (var p in res)
+                        Items.Add(new() { MainText = $"{p.Nombre} ({p.Rol})", SubText = $"{p.Email} - {p.Telefono}" });
                     break;
                 }
         }
@@ -141,7 +157,13 @@ public sealed class MainViewModel : INotifyPropertyChanged
     {
         public string MainText { get; init; } = "";
         public string SubText { get; init; } = "";
-        public object? Raw { get; init; } // opcional: referencia al modelo real
+        public object? Raw { get; init; } 
+    }
+
+    public void RefreshForCurrentUser()
+    {
+        if (MenuItems.Count == 0)
+            BuildMenuForRole();
     }
 }
 

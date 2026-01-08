@@ -14,5 +14,6 @@ namespace Inventrack.App.Models.Dtos.Auth
         public int RolId { get; set; }
         public int? AlmacenId { get; set; }
         public bool? Activo { get; set; }
+        public string Telefono { get; set; } = "";
     }
 }

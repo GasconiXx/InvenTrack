@@ -2,18 +2,45 @@
 <ContentPage
     x:Class="Inventrack.App.Views.LoginPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="Login">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <VerticalStackLayout Padding="24" Spacing="12">
-        <Label Text="InvenTrack" FontSize="32" FontAttributes="Bold" />
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-        <Entry Placeholder="Email" Keyboard="Email" Text="{Binding Email}" />
-        <Entry Placeholder="Contraseña" IsPassword="True" Text="{Binding Password}" />
+        <VerticalStackLayout
+            Grid.Row="1"
+            Padding="24"
+            Spacing="12"
+            HorizontalOptions="Center"
+            WidthRequest="320">
 
-        <Label Text="{Binding Error}" TextColor="Red" />
+            <Label
+                Text="InvenTrack"
+                FontSize="32"
+                FontAttributes="Bold"
+                HorizontalTextAlignment="Center" />
 
-        <Button Text="Entrar" Command="{Binding LoginCommand}" />
-        <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
-    </VerticalStackLayout>
+            <Entry Placeholder="Email"
+                   Keyboard="Email"
+                   Text="{Binding Email}" />
+
+            <Entry Placeholder="Contraseña"
+                   IsPassword="True"
+                   Text="{Binding Password}" />
+
+            <Label Text="{Binding Error}"
+                   TextColor="Red"
+                   HorizontalTextAlignment="Center"/>
+
+            <Button Text="Iniciar sesión"
+                    Command="{Binding LoginCommand}" />
+
+            <ActivityIndicator IsRunning="{Binding IsBusy}"
+                               IsVisible="{Binding IsBusy}" />
+        </VerticalStackLayout>
+    </Grid>
 </ContentPage>

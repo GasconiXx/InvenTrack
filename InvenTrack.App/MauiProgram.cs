@@ -27,6 +27,7 @@ public static class MauiProgram
         // Services
         builder.Services.AddTransient<IAuthService, AuthService>();
         builder.Services.AddTransient<IPackagesService, PackagesService>();
+        builder.Services.AddTransient<IUserService, UserService>();
 
         // VMs
         builder.Services.AddTransient<LoginViewModel>();
@@ -35,6 +36,7 @@ public static class MauiProgram
         // Pages
         builder.Services.AddTransient<LoginPage>();
         builder.Services.AddTransient<MainPage>();
+        builder.Services.AddTransient<UserEditPage>();
 
         // Shell
         builder.Services.AddSingleton<AppShell>();

@@ -1,4 +1,5 @@
 ﻿using Inventrack.App.Models;
+using Inventrack.App.Models.Dtos.Envios;
 using Inventrack.App.Models.Dtos.Packages;
 using System;
 using System.Collections.Generic;
@@ -14,5 +15,6 @@ namespace Inventrack.App.Services.Interfaces
         Task<IReadOnlyList<PackageListItemDto>> GetAssignedAsync(CancellationToken ct = default);
         Task<IReadOnlyList<PackageListItemDto>> GetWarehouseAsync(CancellationToken ct = default);
         Task<IReadOnlyList<PackageListItemDto>> GetAllAsync(CancellationToken ct = default);
+        Task<IReadOnlyList<EnvioListItemDto>> GetMyShipmentsAsync(CancellationToken ct = default);
     }
 }
