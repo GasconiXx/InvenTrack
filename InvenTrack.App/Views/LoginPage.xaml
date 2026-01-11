@@ -18,11 +18,12 @@
             HorizontalOptions="Center"
             WidthRequest="320">
 
-            <Label
-                Text="InvenTrack"
-                FontSize="32"
-                FontAttributes="Bold"
-                HorizontalTextAlignment="Center" />
+            <Image
+                Source="inventrack_logo.png"
+                HeightRequest="140"
+                WidthRequest="1000"
+                HorizontalOptions="Center"
+                Margin="0,0,0,12" />
 
             <Entry Placeholder="Email"
                    Keyboard="Email"
