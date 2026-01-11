@@ -105,7 +105,7 @@ public sealed class MainViewModel : INotifyPropertyChanged
                 {
                     var res = await _packagesService.GetMyPackagesAsync();
                     foreach (var p in res)
-                        Items.Add(new() { MainText = p.Codigo, SubText = $"{ p.Estado } - {p.Remitente}" });
+                        Items.Add(new() { MainText = p.Codigo, SubText = $"{ p.Estado } - {p.Destinatario}" });
                     break;
                 }
             case "assigned":
