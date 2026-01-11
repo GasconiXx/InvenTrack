@@ -18,9 +18,13 @@ public static class MauiProgram
 
         builder.Services.AddTransient<AuthHeaderHandler>();
 
+        var apiBaseUrl = DeviceInfo.Platform == DevicePlatform.Android
+            ? "http://10.0.2.2:5192/"
+            : "https://localhost:7261/";
+
         builder.Services.AddHttpClient("ApiClient", client =>
         {
-            client.BaseAddress = new Uri("https://localhost:7261/"); 
+            client.BaseAddress = new Uri(apiBaseUrl);
         })
         .AddHttpMessageHandler<AuthHeaderHandler>();
 
