@@ -128,6 +128,7 @@ public class PaquetesController : ControllerBase
                 Codigo = p.CodigoSeguimiento,
                 Estado = p.Estado.Nombre,
                 Remitente = $"{p.DireccionOrigen.Calle}, {p.DireccionOrigen.Ciudad},  {p.DireccionOrigen.Provincia}, {p.DireccionOrigen.CodigoPostal}",
+                Destinatario = $"{p.DireccionDestino.Calle}, {p.DireccionDestino.Ciudad}, {p.DireccionDestino.Provincia}, {p.DireccionDestino.CodigoPostal}",
                 Almacen = p.AlmacenActual.Nombre
             })
             .ToListAsync(ct);
