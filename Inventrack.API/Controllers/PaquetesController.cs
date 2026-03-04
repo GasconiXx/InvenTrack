@@ -1,9 +1,7 @@
-using Inventrack.API.Contracts.Packages;
+using Inventrack.API.Contracts.Paquetes;
 using Inventrack.API.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.IdentityModel.Tokens.Jwt;
 
 namespace Inventrack.API.Controllers;
 
@@ -117,7 +115,7 @@ public class PaquetesController : ControllerBase
     public async Task<ActionResult<List<PackageListItemDto>>> GetMisPaquetes([FromQuery] int userId, CancellationToken ct)
     {
         if (userId <= 0)
-            return BadRequest("userId inválido.");
+            return BadRequest("userId invï¿½lido.");
 
         var data = await _context.Paquetes
             .AsNoTracking()
